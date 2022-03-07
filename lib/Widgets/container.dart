@@ -16,29 +16,53 @@ class MyContainer extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.2,
+        height: MediaQuery.of(context).size.height * 0.3,
         width: MediaQuery.of(context).size.width * 0.4,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.deepPurpleAccent.withOpacity(0.5)),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onTap: () {
-              // Navigator.pushNamed(context, navName) ;
-            },
+        child: Card(
+          elevation: 2.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
-              children: [
-                Image.asset(
-                  srcImg,
-                  height: MediaQuery.of(context).size.width * 0.25,
-                  width: MediaQuery.of(context).size.width * 0.25,
+              children: <Widget>[
+                Image(image: AssetImage(srcImg)),
+                const SizedBox(
+                  height: 14.0,
                 ),
-                Text(name, style: const TextStyle(fontSize: 23))
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ],
             ),
           ),
         ),
+        // decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.circular(20),
+        //     color: Colors.deepPurpleAccent.withOpacity(0.5)),
+        // child: Padding(
+        //   padding: const EdgeInsets.all(8.0),
+        //   child: GestureDetector(
+        //     onTap: () {
+        //       // Navigator.pushNamed(context, navName) ;
+        //     },
+        //     child: Column(
+        //       children: [
+        //         Image.asset(
+        //           srcImg,
+        //           height: MediaQuery.of(context).size.width * 0.25,
+        //           width: MediaQuery.of(context).size.width * 0.25,
+        //         ),
+        //         Text(name, style: const TextStyle(fontSize: 23))
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
