@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
     return Center(
       child: Container(
         child: ListView.builder(
-          itemCount: OnlineJadge.onilneJadge.length ,
+          itemCount: OnlineJudge.onlineJudge.length ,
           itemBuilder: (BuildContext ctx, int index) {
             context = ctx;
             if (index & 1 == 0) {
@@ -28,19 +28,19 @@ class Home extends StatelessWidget {
 }
 
 Widget TwoWebsites(int index) {
-  int length = OnlineJadge.onilneJadge.length;
+  int length = OnlineJudge.onlineJudge.length;
   return Row(children: [
-    websitee(obj: OnlineJadge.onilneJadge[index]),
+    websitee(obj: OnlineJudge.onlineJudge[index]),
     const SizedBox(
       width: 10.0,
     ),
     if (length & 1 == 0 || length & 1 == 1 && index + 1 < length)
-      websitee(obj: OnlineJadge.onilneJadge[index + 1])
+      websitee(obj: OnlineJudge.onlineJudge[index + 1])
   ]);
 }
 
 class websitee extends StatelessWidget {
-  final OnlineJadge obj;
+  final OnlineJudge obj;
 
   const websitee({Key? key, required this.obj}) : super(key: key);
 

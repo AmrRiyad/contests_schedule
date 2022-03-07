@@ -1,62 +1,29 @@
-class Contest {
-  String day;
-  int lenght;
-
-  Contest(this.day, this.lenght);
-}
-
-class OnlineJadge {
+class OnlineJudge {
   String name;
   String imageUrl;
-  List<Contest> contest;
 
-  OnlineJadge(this.name, this.imageUrl, this.contest);
+  OnlineJudge(this.name, this.imageUrl);
 
-  static List<OnlineJadge> onilneJadge = [
-    OnlineJadge(
+  static List<OnlineJudge> onlineJudge = [
+    OnlineJudge(
       'CodeForces',
       'assets/codeforces.png',
-      [
-        Contest('11 / 3', 3),
-        Contest('11 / 4', 3),
-        Contest('11 / 5', 2),
-      ],
     ),
-    OnlineJadge(
+    OnlineJudge(
       'Code chef',
       'assets/codechef.png',
-      [
-        Contest('11 / 3', 3),
-        Contest('11 / 4', 3),
-        Contest('11 / 5', 2),
-      ],
     ),
-    OnlineJadge(
+    OnlineJudge(
       'Hacker rank',
       'assets/hackerrank.png',
-      [
-        Contest('11 / 3', 3),
-        Contest('11 / 4', 3),
-        Contest('11 / 5', 2),
-      ],
     ),
-    OnlineJadge(
+    OnlineJudge(
       'Leetcode',
       'assets/leetcode.png',
-      [
-        Contest('11 / 3', 3),
-        Contest('11 / 4', 3),
-        Contest('11 / 5', 2),
-      ],
     ),
-    OnlineJadge(
+    OnlineJudge(
       'atcoder',
       'assets/atcoder.png',
-      [
-        Contest('11 / 3', 3),
-        Contest('11 / 4', 3),
-        Contest('11 / 5', 2),
-      ],
     ),
   ];
 }
