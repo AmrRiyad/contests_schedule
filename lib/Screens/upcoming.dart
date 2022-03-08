@@ -36,11 +36,11 @@ class Upcoming extends StatefulWidget {
 }
 
 class _UpcomingState extends State<Upcoming> {
-  List<Contest> contests = [];
-  late Future<List<Contest>> c ;
-  Future getCodeforcesData() async{
-    final response = await http.get(Uri.parse('https://c...content-available-to-author-only...s.com/api/contest.list?gym=false'));
 
+  late Future<List<Contest>> futureContests;
+  Future<List<Contest>> getCodeforcesData() async{
+    final response = await http.get(Uri.parse('https://c...content-available-to-author-only...s.com/api/contest.list?gym=false'));
+    List<Contest> contests = [];
     if(response.statusCode == 200){
       // If the server did return a 200 OK response,
       // then parse the JSON.
@@ -51,26 +51,25 @@ class _UpcomingState extends State<Upcoming> {
           }
         }
         contests.sort(compareTwoContestsBasedOnDate);
-        print('Hello') ;
       });
     }else{
       // If the server did not return a 200 OK response,
       // then throw an exception.
       throw Exception('Failed to load Codeforces data');
     }
+    return contests;
   }
 
   @override
   void initState(){
     super.initState();
-    getCodeforcesData() ;
-    c = contests as Future<List<Contest>> ;
+    futureContests = getCodeforcesData();
   }
 
 
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future:  c,
+        future:  futureContests,
         builder: (context, AsyncSnapshot<dynamic> snapshot ){
           if ( snapshot.connectionState == ConnectionState.waiting ){
             return const Center(
@@ -80,16 +79,15 @@ class _UpcomingState extends State<Upcoming> {
             );
           }
           else if ( snapshot.connectionState == ConnectionState.done ){
-            print(contests.length) ;
             return ListView.builder(
-                itemCount: contests.length,
+                itemCount: snap,
                 itemBuilder: ( context , index ){
                   return MyCard(
-                    platform: contests[index].platform,
-                    contestDate: contests[index].contestDate,
-                    contestDuration: contests[index].contestDuration,
-                    contestName: contests[index].contestName,
-                    contestTime: contests[index].contestTime,
+                    platform: '1',
+                    contestDate: '1',
+                    contestDuration: '1',
+                    contestName: '1',
+                    contestTime: '1',
                   );
                 }
             );
