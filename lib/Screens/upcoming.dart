@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:contests_schedule/Widgets/card.dart';
-import 'package:contests_schedule/online%20judges/codeforces.dart';
+import 'package:contests_schedule/online%20judges/fetch.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -37,75 +37,66 @@ class Upcoming extends StatefulWidget {
 
 class _UpcomingState extends State<Upcoming> {
   List<Contest> contests = [];
+  late Future<List<Contest>> c ;
   Future getCodeforcesData() async{
-      final response = await http.get(Uri.parse('https://codeforces.com/api/contest.list?gym=false'));
+    final response = await http.get(Uri.parse('https://c...content-available-to-author-only...s.com/api/contest.list?gym=false'));
 
-      if(response.statusCode == 200){
-        // If the server did return a 200 OK response,
-        // then parse the JSON.
-        setState(() {
-            for(int i = 0; i < 10; i++){
-                if(jsonDecode(response.body)['result'][i]['phase'] != "FINISHED"){
-                    contests.add(CodeforcesContest.fromJson(jsonDecode(response.body), i));
-                }
-            }
-            contests.sort(compareTwoContestsBasedOnDate);
-        });
-      }else{
-        // If the server did not return a 200 OK response,
-        // then throw an exception.
-        throw Exception('Failed to load Codeforces data');
-      }
+    if(response.statusCode == 200){
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      setState(() {
+        for(int i = 0; i < 10; i++){
+          if(jsonDecode(response.body)['result'][i]['phase'] != "FINISHED"){
+            contests.add(CodeforcesContest.fromJson(jsonDecode(response.body), i));
+          }
+        }
+        contests.sort(compareTwoContestsBasedOnDate);
+        print('Hello') ;
+      });
+    }else{
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load Codeforces data');
+    }
   }
 
   @override
   void initState(){
     super.initState();
-    getCodeforcesData();
+    getCodeforcesData() ;
+    c = contests as Future<List<Contest>> ;
   }
 
 
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children:[
-          MyCard(
-            platform: contests[0].platform,
-            contestDate: contests[0].contestDate,
-            contestDuration: contests[0].contestDuration,
-            contestName: contests[0].contestName,
-            contestTime: contests[0].contestTime,
-          ),
-          MyCard(
-            platform: contests[1].platform,
-            contestDate: contests[1].contestDate,
-            contestDuration: contests[1].contestDuration,
-            contestName: contests[1].contestName,
-            contestTime: contests[1].contestTime,
-          ),
-          MyCard(
-            platform: contests[1].platform,
-            contestDate: contests[1].contestDate,
-            contestDuration: contests[1].contestDuration,
-            contestName: contests[1].contestName,
-            contestTime: contests[1].contestTime,
-          ),
-          MyCard(
-            platform: "Codeforces",
-            contestDate: "12/02/2022",
-            contestDuration: "2 hours",
-            contestName: "Global round 19",
-            contestTime: "16:35 pm",
-          ),
-          MyCard(
-            platform: "Codeforces",
-            contestDate: "12/02/2022",
-            contestDuration: "2 hours",
-            contestName: "Global round 19",
-            contestTime: "16:35 pm",
-          ),
-        ],
-      ),
-    );
+    return FutureBuilder(
+        future:  c,
+        builder: (context, AsyncSnapshot<dynamic> snapshot ){
+          if ( snapshot.connectionState == ConnectionState.waiting ){
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.greenAccent ,
+              ),
+            );
+          }
+          else if ( snapshot.connectionState == ConnectionState.done ){
+            print(contests.length) ;
+            return ListView.builder(
+                itemCount: contests.length,
+                itemBuilder: ( context , index ){
+                  return MyCard(
+                    platform: contests[index].platform,
+                    contestDate: contests[index].contestDate,
+                    contestDuration: contests[index].contestDuration,
+                    contestName: contests[index].contestName,
+                    contestTime: contests[index].contestTime,
+                  );
+                }
+            );
+          }else{
+            return Container() ;
+          }
+        }
+    ) ;
   }
 }

@@ -8,75 +8,67 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: ListView.builder(
-          itemCount: OnlineJudge.onlineJudge.length ,
-          itemBuilder: (BuildContext ctx, int index) {
-            context = ctx;
-            if (index & 1 == 0) {
-              return TwoWebsites(index);
-            }
-            return Spacer(
-              flex: 3,
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-Widget TwoWebsites(int index) {
-  int length = OnlineJudge.onlineJudge.length;
-  return Row(children: [
-    websitee(obj: OnlineJudge.onlineJudge[index]),
-    const SizedBox(
-      width: 10.0,
-    ),
-    if (length & 1 == 0 || length & 1 == 1 && index + 1 < length)
-      websitee(obj: OnlineJudge.onlineJudge[index + 1])
-  ]);
-}
-
-class websitee extends StatelessWidget {
-  final OnlineJudge obj;
-
-  const websitee({Key? key, required this.obj}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.3,
-      width: MediaQuery.of(context).size.width * 0.45,
-      child: Card(
-        elevation: 2.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              Image(
-                fit: BoxFit.fitHeight,
-                image: AssetImage(obj.imageUrl),
-                height: MediaQuery.of(context).size.width * 0.40,
-                // width: MediaQuery.of(context).size.width * 0.30,
-              ),
-              const SizedBox(
-                height: 25.0,
-              ),
-              Text(
-                obj.name,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
+    double pad = 0.01*MediaQuery.of(context).size.height ;
+    return Padding(
+      padding: EdgeInsets.all(pad),
+      child: ListView.builder(
+        itemCount: onlineJudge.length ,
+        itemBuilder: (BuildContext context , int index){
+          return Padding(
+            padding:EdgeInsets.all(pad),
+            child: Container(
+              height: 0.3*MediaQuery.of(context).size.height,
+              alignment:  index % 2 == 1 ? Alignment.centerRight : Alignment.centerLeft,
+              child: SizedBox(
+                height: 0.31*MediaQuery.of(context).size.height,
+                width: 0.42*MediaQuery.of(context).size.width,
+                child: GestureDetector(
+                  onTap: (){
+                     Navigator.pushNamed(context, onlineJudge[index].route ) ;
+                  },
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        bottom: 0,
+                        child: Container(
+                          height: 0.2*MediaQuery.of(context).size.height,
+                          width: 0.4*MediaQuery.of(context).size.width,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle ,
+                              color: Colors.greenAccent
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 0,
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 0.2*MediaQuery.of(context).size.height,
+                              width: 0.4*MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                      onlineJudge[index].imageUrl ,
+                                    ),
+                                    fit: BoxFit.contain
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(pad),
+                              child: Center(child: Text( onlineJudge[index].name , style: const TextStyle( fontSize: 25 , fontWeight: FontWeight.bold,color: Colors.white ), )),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

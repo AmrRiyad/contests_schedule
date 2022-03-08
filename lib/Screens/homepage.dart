@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text( "Contest Schedule" , style: TextStyle( fontSize: 25 ),),
           centerTitle: true,
-          backgroundColor: Colors.deepPurpleAccent,
+          backgroundColor: Colors.greenAccent,
         ),
         body: pages[_currentIndex] ,
         bottomNavigationBar: BottomNavigationBar(
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(icon: Icon( Icons.upcoming_outlined ) , label: "upcoming" ) ,
           ],
           currentIndex: _currentIndex ,
-          selectedItemColor: Colors.deepPurpleAccent,
+          selectedItemColor: Colors.greenAccent,
           onTap: ( int value ){
             setState(() {
               _currentIndex = value ;
