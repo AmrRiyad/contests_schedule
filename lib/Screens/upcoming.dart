@@ -4,6 +4,30 @@ import 'package:contests_schedule/online%20judges/codeforces.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+int compareTwoContestsBasedOnDate(Contest contest1, Contest contest2){
+  if(contest1.key.compareTo(contest2.key) > 0){
+    return 1;
+  }else{
+    return 0;
+  }
+}
+class Contest{
+  final String platform;
+  final String contestDate;
+  final String contestDuration;
+  final String contestName;
+  final String contestTime;
+  final DateTime key;
+
+  Contest({
+    required this.platform,
+    required this.contestDate,
+    required this.contestDuration,
+    required this.contestName,
+    required this.contestTime,
+    required this.key,
+  });
+}
 class Upcoming extends StatefulWidget {
   const Upcoming({Key? key}) : super(key: key);
 
@@ -12,7 +36,7 @@ class Upcoming extends StatefulWidget {
 }
 
 class _UpcomingState extends State<Upcoming> {
-  CodeforcesContest codeforcesContest = CodeforcesContest(platform: '', contestDate: '', contestDuration: '', contestName: '', contestTime: '');
+  List<Contest> contests = [];
   Future getCodeforcesData() async{
       final response = await http.get(Uri.parse('https://codeforces.com/api/contest.list?gym=false'));
 
@@ -20,7 +44,12 @@ class _UpcomingState extends State<Upcoming> {
         // If the server did return a 200 OK response,
         // then parse the JSON.
         setState(() {
-          codeforcesContest = CodeforcesContest.fromJson(jsonDecode(response.body));
+            for(int i = 0; i < 10; i++){
+                if(jsonDecode(response.body)['result'][i]['phase'] != "FINISHED"){
+                    contests.add(CodeforcesContest.fromJson(jsonDecode(response.body), i));
+                }
+            }
+            contests.sort(compareTwoContestsBasedOnDate);
         });
       }else{
         // If the server did not return a 200 OK response,
@@ -41,25 +70,25 @@ class _UpcomingState extends State<Upcoming> {
       child: Column(
         children:[
           MyCard(
-            platform: codeforcesContest.platform,
-            contestDate: codeforcesContest.contestDate,
-            contestDuration: codeforcesContest.contestDuration,
-            contestName: codeforcesContest.contestName,
-            contestTime: codeforcesContest.contestTime,
+            platform: contests[0].platform,
+            contestDate: contests[0].contestDate,
+            contestDuration: contests[0].contestDuration,
+            contestName: contests[0].contestName,
+            contestTime: contests[0].contestTime,
           ),
           MyCard(
-            platform: "Codeforces",
-            contestDate: "12/02/2022",
-            contestDuration: "2 hours",
-            contestName: "Global round 19",
-            contestTime: "16:35 pm",
+            platform: contests[1].platform,
+            contestDate: contests[1].contestDate,
+            contestDuration: contests[1].contestDuration,
+            contestName: contests[1].contestName,
+            contestTime: contests[1].contestTime,
           ),
           MyCard(
-            platform: "Codeforces",
-            contestDate: "12/02/2022",
-            contestDuration: "2 hours",
-            contestName: "Global round 19",
-            contestTime: "16:35 pm",
+            platform: contests[2].platform,
+            contestDate: contests[2].contestDate,
+            contestDuration: contests[2].contestDuration,
+            contestName: contests[2].contestName,
+            contestTime: contests[2].contestTime,
           ),
           MyCard(
             platform: "Codeforces",
