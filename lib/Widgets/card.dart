@@ -20,10 +20,10 @@ class MyCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.205,
+        height: MediaQuery.of(context).size.height * 0.23,
         width: double.infinity,
         decoration: BoxDecoration(
-            color: Colors.deepPurpleAccent,
+            color: Colors.greenAccent,
             borderRadius: BorderRadius.circular(15)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
