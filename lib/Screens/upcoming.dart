@@ -84,11 +84,11 @@ class _UpcomingState extends State<Upcoming> {
             contestTime: contests[1].contestTime,
           ),
           MyCard(
-            platform: contests[2].platform,
-            contestDate: contests[2].contestDate,
-            contestDuration: contests[2].contestDuration,
-            contestName: contests[2].contestName,
-            contestTime: contests[2].contestTime,
+            platform: contests[1].platform,
+            contestDate: contests[1].contestDate,
+            contestDuration: contests[1].contestDuration,
+            contestName: contests[1].contestName,
+            contestTime: contests[1].contestTime,
           ),
           MyCard(
             platform: "Codeforces",
