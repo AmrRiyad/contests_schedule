@@ -37,40 +37,38 @@ class Upcoming extends StatefulWidget {
 
 class _UpcomingState extends State<Upcoming> {
   List<Contest> contests = [];
-  late Future<List<Contest>> c ;
+  Future ?data ;
   Future getCodeforcesData() async{
-    final response = await http.get(Uri.parse('https://c...content-available-to-author-only...s.com/api/contest.list?gym=false'));
-
-    if(response.statusCode == 200){
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      setState(() {
-        for(int i = 0; i < 10; i++){
-          if(jsonDecode(response.body)['result'][i]['phase'] != "FINISHED"){
-            contests.add(CodeforcesContest.fromJson(jsonDecode(response.body), i));
+      final response = await http.get(Uri.parse('https://codeforces.com/api/contest.list?gym=false'));
+      if(response.statusCode == 200){
+        // If the server did return a 200 OK response,
+        // then parse the JSON.
+        setState(() {
+          var data = jsonDecode(response.body) ;
+          for ( var it in data['result'] ){
+            if ( it['phase'] == 'BEFORE' ){
+              contests.add(CodeforcesContest.fromJson(it)) ;
+            }
           }
-        }
-        contests.sort(compareTwoContestsBasedOnDate);
-        print('Hello') ;
-      });
-    }else{
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load Codeforces data');
-    }
+          contests.sort(compareTwoContestsBasedOnDate);
+        });
+      }else{
+        // If the server did not return a 200 OK response,
+        // then throw an exception.
+        throw Exception('Failed to load Codeforces data');
+      }
   }
 
   @override
   void initState(){
     super.initState();
-    getCodeforcesData() ;
-    c = contests as Future<List<Contest>> ;
+    data = getCodeforcesData() ;
   }
 
-
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future:  c,
+      future: data ,
         builder: (context, AsyncSnapshot<dynamic> snapshot ){
           if ( snapshot.connectionState == ConnectionState.waiting ){
             return const Center(
@@ -80,10 +78,10 @@ class _UpcomingState extends State<Upcoming> {
             );
           }
           else if ( snapshot.connectionState == ConnectionState.done ){
-            print(contests.length) ;
             return ListView.builder(
-                itemCount: contests.length,
+              itemCount: contests.length,
                 itemBuilder: ( context , index ){
+                print(snapshot.hasData) ;
                   return MyCard(
                     platform: contests[index].platform,
                     contestDate: contests[index].contestDate,
