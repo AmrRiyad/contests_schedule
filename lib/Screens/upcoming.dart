@@ -81,7 +81,6 @@ class _UpcomingState extends State<Upcoming> {
             return ListView.builder(
               itemCount: contests.length,
                 itemBuilder: ( context , index ){
-                print(snapshot.hasData) ;
                   return MyCard(
                     platform: contests[index].platform,
                     contestDate: contests[index].contestDate,
