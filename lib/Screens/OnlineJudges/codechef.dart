@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' ;
+import 'package:flutter/material.dart';
 
 class codechef extends StatelessWidget {
   const codechef({Key? key}) : super(key: key);
@@ -7,9 +7,7 @@ class codechef extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(
-          'codechef'
-        ),
+        child: Text('codechef'),
       ),
     );
   }
