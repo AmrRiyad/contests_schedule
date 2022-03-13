@@ -6,7 +6,11 @@ import 'package:contests_schedule/Screens/OnlineJudges/leetcode.dart';
 import 'Screens/homepage.dart';
 import 'package:flutter/material.dart';
 
+import 'notification_system/notification_service.dart';
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
   return runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     initialRoute: 'home',

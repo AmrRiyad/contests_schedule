@@ -7,12 +7,15 @@ class GlassContainer extends StatelessWidget {
   final String contestDate;
   final String contestTime;
   final String contestDuration;
+  final Color color;
+
   const GlassContainer(
       {Key? key,
       required this.contestName,
       required this.contestDate,
       required this.contestTime,
-      required this.contestDuration})
+      required this.contestDuration,
+      required this.color})
       : super(key: key);
 
   @override
@@ -32,38 +35,38 @@ class GlassContainer extends StatelessWidget {
                 children: [
                   Text(
                     contestName,
-                    style: TextStyle(color: Colors.white, fontSize: 28),
+                    style: TextStyle(color: color, fontSize: 28),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.date_range,
-                            color: Colors.white,
+                            color: color,
                           ),
                           Text(
                             contestDate,
-                            style: TextStyle(color: Colors.white, fontSize: 26),
+                            style: TextStyle(color: color, fontSize: 26),
                           ),
                         ],
                       ),
                       Text(
                         contestTime,
-                        style: TextStyle(color: Colors.white, fontSize: 26),
+                        style: TextStyle(color: color, fontSize: 26),
                       )
                     ],
                   ),
                   Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.timelapse_outlined,
-                        color: Colors.white,
+                        color: color,
                       ),
                       Text(
                         '$contestDuration M',
-                        style: TextStyle(color: Colors.white, fontSize: 26),
+                        style: TextStyle(color: color, fontSize: 26),
                       )
                     ],
                   )

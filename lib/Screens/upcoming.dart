@@ -42,6 +42,7 @@ class Upcoming extends StatefulWidget {
 class _UpcomingState extends State<Upcoming> {
   List<Contest> contests = [];
   Future? data;
+
   Future getCodeforcesData() async {
     final response = await http
         .get(Uri.parse('https://codeforces.com/api/contest.list?gym=false'));
@@ -86,10 +87,12 @@ class _UpcomingState extends State<Upcoming> {
                 itemCount: contests.length,
                 itemBuilder: (context, index) {
                   return GlassContainer(
-                      contestName: contests[index].contestName,
-                      contestDate: contests[index].contestDate,
-                      contestTime: contests[index].contestTime,
-                      contestDuration: contests[index].contestDuration);
+                    contestName: contests[index].contestName,
+                    contestDate: contests[index].contestDate,
+                    contestTime: contests[index].contestTime,
+                    contestDuration: contests[index].contestDuration,
+                    color: Colors.white,
+                  );
                 });
           } else {
             return Container();

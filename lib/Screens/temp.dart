@@ -2,6 +2,8 @@ import 'package:contests_schedule/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 
+import 'each_site.dart';
+
 class NewHome extends StatefulWidget {
   const NewHome({Key? key}) : super(key: key);
 
@@ -77,8 +79,17 @@ class _NewHomeState extends State<NewHome> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, onlineJudge[index].route);
+                                // Navigator.pushNamed(
+                                //     context, onlineJudge[index].route);
+                                press:
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Site(
+                                      site: onlineJudge[index],
+                                    ),
+                                  ),
+                                );
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -103,9 +114,12 @@ class _NewHomeState extends State<NewHome> {
                       top: 0,
                       right: 0,
                       left: 0,
-                      child: Image.asset(
-                        onlineJudge[index].imageUrl,
-                        height: 200,
+                      child: Hero(
+                        tag: onlineJudge[index].route,
+                        child: Image.asset(
+                          onlineJudge[index].imageUrl,
+                          height: 200,
+                        ),
                       )),
                 ],
               );

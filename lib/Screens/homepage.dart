@@ -17,6 +17,7 @@ class _HomePageState extends State<HomePage> {
     const Upcoming()
   ];
   int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,12 +28,13 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Container(
           decoration: const BoxDecoration(
-              gradient: LinearGradient(
-            colors: [Colors.purpleAccent, Colors.blueAccent],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.3, 0.7],
-          )),
+            gradient: LinearGradient(
+              colors: [Colors.purpleAccent, Colors.blueAccent],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [0.3, 0.7],
+            ),
+          ),
           child: pages[_currentIndex],
         ),
         backgroundColor: Colors.black,

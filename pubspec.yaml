@@ -36,6 +36,8 @@ dependencies:
   flutter_blurhash:
   flutter_swiper_null_safety:
   flutter_spinkit:
+  flutter_local_notifications: ^9.4.0
+  timezone: ^0.8.0
 
 
 

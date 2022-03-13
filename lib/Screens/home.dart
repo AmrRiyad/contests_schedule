@@ -55,14 +55,15 @@ class Home extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.all(pad),
                               child: Center(
-                                  child: Text(
-                                onlineJudge[index].name,
-                                style: const TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              )),
-                            )
+                                child: Text(
+                                  onlineJudge[index].name,
+                                  style: const TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       )
