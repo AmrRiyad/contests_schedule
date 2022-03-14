@@ -30,6 +30,14 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.4
+  curved_navigation_bar:
+  provider:
+  focused_menu:
+  flutter_blurhash:
+  flutter_swiper_null_safety:
+  flutter_spinkit:
+  flutter_local_notifications: ^9.4.0
+  timezone: ^0.8.0
 
 
 
@@ -76,10 +84,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Avenir
+      fonts:
+        - asset: fonts/AvenirLTStd-Black.otf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' ;
+import 'package:flutter/material.dart';
 
 class codeforces extends StatelessWidget {
   const codeforces({Key? key}) : super(key: key);

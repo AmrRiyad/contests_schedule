@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart' ;
-import 'home.dart';
-
-import '../Widgets/container.dart';
+import 'package:contests_schedule/Screens/temp.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/material.dart';
 import 'upcoming.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,33 +12,48 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List pages = [
-    const Home() ,
+    const NewHome(),
+    // const Home() ,
     const Upcoming()
   ];
-  int _currentIndex = 0 ;
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text( "Contest Schedule" , style: TextStyle( fontSize: 25 ),),
-          centerTitle: true,
-          backgroundColor: Colors.greenAccent,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.white,
+          onPressed: () {},
         ),
-        body: pages[_currentIndex] ,
-        bottomNavigationBar: BottomNavigationBar(
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.purpleAccent, Colors.blueAccent],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [0.3, 0.7],
+            ),
+          ),
+          child: pages[_currentIndex],
+        ),
+        backgroundColor: Colors.black,
+        extendBody: true,
+        bottomNavigationBar: CurvedNavigationBar(
           items: const [
-            BottomNavigationBarItem(icon: Icon( Icons.home_outlined ) , label: "home") ,
-            BottomNavigationBarItem(icon: Icon( Icons.upcoming_outlined ) , label: "upcoming" ) ,
+            Icon(Icons.home),
+            Icon(Icons.upcoming),
           ],
-          currentIndex: _currentIndex ,
-          selectedItemColor: Colors.greenAccent,
-          onTap: ( int value ){
+          backgroundColor: Colors.transparent,
+          animationDuration: const Duration(milliseconds: 350),
+          index: _currentIndex,
+          height: 60,
+          onTap: (int value) {
             setState(() {
-              _currentIndex = value ;
+              _currentIndex = value;
             });
           },
-        )
+        ),
       ),
     );
   }

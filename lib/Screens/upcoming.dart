@@ -1,17 +1,20 @@
 import 'dart:convert';
 import 'package:contests_schedule/Widgets/card.dart';
+import 'package:contests_schedule/Widgets/glass_container.dart';
 import 'package:contests_schedule/online%20judges/fetch.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 
-int compareTwoContestsBasedOnDate(Contest contest1, Contest contest2){
-  if(contest1.key.compareTo(contest2.key) > 0){
+int compareTwoContestsBasedOnDate(Contest contest1, Contest contest2) {
+  if (contest1.key.compareTo(contest2.key) > 0) {
     return 1;
-  }else{
+  } else {
     return 0;
   }
 }
-class Contest{
+
+class Contest {
   final String platform;
   final String contestDate;
   final String contestDuration;
@@ -28,6 +31,7 @@ class Contest{
     required this.key,
   });
 }
+
 class Upcoming extends StatefulWidget {
   const Upcoming({Key? key}) : super(key: key);
 
@@ -37,63 +41,62 @@ class Upcoming extends StatefulWidget {
 
 class _UpcomingState extends State<Upcoming> {
   List<Contest> contests = [];
-  Future ?data ;
-  Future getCodeforcesData() async{
-      final response = await http.get(Uri.parse('https://codeforces.com/api/contest.list?gym=false'));
-      if(response.statusCode == 200){
-        // If the server did return a 200 OK response,
-        // then parse the JSON.
-        setState(() {
-          var data = jsonDecode(response.body) ;
-          for ( var it in data['result'] ){
-            if ( it['phase'] == 'BEFORE' ){
-              contests.add(CodeforcesContest.fromJson(it)) ;
-            }
+  Future? data;
+
+  Future getCodeforcesData() async {
+    final response = await http
+        .get(Uri.parse('https://codeforces.com/api/contest.list?gym=false'));
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      setState(() {
+        var data = jsonDecode(response.body);
+        for (var it in data['result']) {
+          if (it['phase'] == 'BEFORE') {
+            contests.add(CodeforcesContest.fromJson(it));
           }
-          contests.sort(compareTwoContestsBasedOnDate);
-        });
-      }else{
-        // If the server did not return a 200 OK response,
-        // then throw an exception.
-        throw Exception('Failed to load Codeforces data');
-      }
+        }
+        contests.sort(compareTwoContestsBasedOnDate);
+      });
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load Codeforces data');
+    }
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    data = getCodeforcesData() ;
+    data = getCodeforcesData();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: data ,
-        builder: (context, AsyncSnapshot<dynamic> snapshot ){
-          if ( snapshot.connectionState == ConnectionState.waiting ){
+        future: data,
+        builder: (context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.greenAccent ,
+              child: SpinKitDoubleBounce(
+                color: Colors.white54,
               ),
             );
-          }
-          else if ( snapshot.connectionState == ConnectionState.done ){
+          } else if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
-              itemCount: contests.length,
-                itemBuilder: ( context , index ){
-                  return MyCard(
-                    platform: contests[index].platform,
-                    contestDate: contests[index].contestDate,
-                    contestDuration: contests[index].contestDuration,
+                itemCount: contests.length,
+                itemBuilder: (context, index) {
+                  return GlassContainer(
                     contestName: contests[index].contestName,
+                    contestDate: contests[index].contestDate,
                     contestTime: contests[index].contestTime,
+                    contestDuration: contests[index].contestDuration,
+                    color: Colors.white,
                   );
-                }
-            );
-          }else{
-            return Container() ;
+                });
+          } else {
+            return Container();
           }
-        }
-    ) ;
+        });
   }
 }
