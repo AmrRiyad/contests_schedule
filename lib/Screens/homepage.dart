@@ -29,10 +29,10 @@ class _HomePageState extends State<HomePage> {
         body: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.purpleAccent, Colors.blueAccent],
+              colors: [Color.fromRGBO(130, 147, 248, 1.0), Colors.indigoAccent],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              stops: [0.3, 0.7],
+              stops: [0.3, 0.8],
             ),
           ),
           child: pages[_currentIndex],
