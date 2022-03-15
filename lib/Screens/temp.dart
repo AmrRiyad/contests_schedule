@@ -49,29 +49,29 @@ class _NewHomeState extends State<NewHome> {
                     height: 100,
                   ),
                   Positioned(
-                    bottom: 40,
+                    bottom: 35,
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.3,
                       width: MediaQuery.of(context).size.width - 2 * 50,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
+                        color: Color.fromRGBO(236, 243, 255, 1.0),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             const SizedBox(
-                              height: 120,
+                              height: 130,
                             ),
                             Text(
                               onlineJudge[index].name,
                               style: const TextStyle(
                                 fontFamily: 'Avenir',
-                                fontSize: 40,
+                                fontSize: 26,
                                 fontWeight: FontWeight.w900,
-                                color: Colors.black,
+                                color: Color.fromRGBO(130, 147, 248, 1.0),
                               ),
                             ),
                             const SizedBox(
