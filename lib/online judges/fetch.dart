@@ -1,27 +1,57 @@
 import 'package:contests_schedule/Screens/upcoming.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class CodeforcesContest extends Contest{
 
-  //CodeforcesContest constructor delegates the constructing to Contest Constructor
-  CodeforcesContest({required String platform, required String contestDate, required String contestDuration, required String contestName, required String contestTime, required DateTime key}) : super(platform: platform, contestDate: contestDate, contestDuration: contestDuration, contestName: contestName, contestTime: contestTime, key: key);
+int compareTwoContestsBasedOnDate(Contest contest1, Contest contest2){
+  if(contest1.key.compareTo(contest2.key) > 0){
+    return 1;
+  }else{
+    return 0;
+  }
+}
+Future getContestsData(String resourceName) async{
+  var url = 'https://clist.by/api/v1/contest/?format=json&resource__name=codeforces.com&username=BemwaMalak&api_key=02b1fc173fc1459c0cc9369df0e0473f2ac922e5';
+  final response = await http.get(Uri.parse(url));
+  print(response.statusCode);
+  if(response.statusCode == 200){
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+  }else{
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load Codeforces data');
+  }
+}
+class Contest{
+  final String platform;
+  final String contestDate;
+  final String contestDuration;
+  final String contestName;
+  final String contestTime;
+  final DateTime key;
 
+  Contest({
+    required this.platform,
+    required this.contestDate,
+    required this.contestDuration,
+    required this.contestName,
+    required this.contestTime,
+    required this.key,
+  });
   //Factory constructor extracts data from the JSON
-  factory CodeforcesContest.fromJson( Map<String,dynamic> json ){
-    int relativeSeconds = json['relativeTimeSeconds'] * -1;
-    double durationSeconds = json['durationSeconds']~/3600 + ((((json['durationSeconds']/3600)-(json['durationSeconds']~/3600))*60)/100);
-    String formattedDate = DateTime.now().add(Duration(seconds: relativeSeconds)).toString();
-    String contestDate = formattedDate.substring(0,10);
-    String contestTime = formattedDate.substring(10,16);
+  factory Contest.fromJson( Map<String,dynamic> json ){
+
 
     //returning a CodeforcesContest object
-    return CodeforcesContest(
+    return Contest(
       platform: 'Codeforces',
-      contestDate: contestDate,
-      contestDuration: durationSeconds.toString() + ' Hours',
-      contestName: json['name'],
-      contestTime: contestTime,
-      key: DateTime.now().add(Duration(seconds: relativeSeconds)),
+      contestDate: 'contestDate',
+      contestDuration: 'durationSeconds.toString()',
+      contestName: '',
+      contestTime: 'contestTime',
+      key: DateTime.now(),
     );
   }
 }
