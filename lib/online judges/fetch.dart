@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:contests_schedule/Screens/upcoming.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -12,13 +14,16 @@ int compareTwoContestsBasedOnDate(Contest contest1, Contest contest2){
   }
 }
 Future getContestsData(String resourceName) async{
-  var url = 'https://clist.by/api/v1/contest/?format=json&resource__name=codeforces.com&username=BemwaMalak&api_key=02b1fc173fc1459c0cc9369df0e0473f2ac922e5';
-  final response = await http.get(Uri.parse(url));
-  print(response.statusCode);
   print('hello');
+  stderr.writeln('print me');
+  var url1 = 'https://clist.by/api/v1/contest/?resource__name=codeforces.com&username=BemwaMalak&api_key=02b1fc173fc1459c0cc9369df0e0473f2ac922e5';
+  final response = await http.get(Uri.parse(url1));
+  print(response.statusCode);
+  print(response);
   if(response.statusCode == 200){
     // If the server did return a 200 OK response,
     // then parse the JSON.
+    var contest = json.decode(response.body);
   }else{
     // If the server did not return a 200 OK response,
     // then throw an exception.
