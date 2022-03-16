@@ -21,7 +21,7 @@ class _UpcomingState extends State<Upcoming> {
   void initState(){
     super.initState();
     print("test");
-    getContestsData("codeforces.com");
+    getContestsData(resourceName: 'codeforces.com');
     print("test");
   }
 

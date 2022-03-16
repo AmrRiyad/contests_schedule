@@ -11,14 +11,13 @@ int compareTwoContestsBasedOnDate(Contest contest1, Contest contest2){
     return 0;
   }
 }
-Future getContestsData(String resourceName) async{
-  var url = 'https://clist.by/api/v1/contest/?format=json&resource__name=codeforces.com&username=BemwaMalak&api_key=02b1fc173fc1459c0cc9369df0e0473f2ac922e5';
+Future<String> getContestsData({String resourceName = 'codeforces.com,leetcode.com,codechef.com,atcoder.jp,hackerrank.com'}) async{
+  var url = 'https://clist.by:443/api/v2/contest/?upcoming=true&resource=$resourceName&format=json&username=BemwaMalak&api_key=02b1fc173fc1459c0cc9369df0e0473f2ac922e5';
   final response = await http.get(Uri.parse(url));
-  print(response.statusCode);
-  print('hello');
   if(response.statusCode == 200){
     // If the server did return a 200 OK response,
     // then parse the JSON.
+    return response.body;
   }else{
     // If the server did not return a 200 OK response,
     // then throw an exception.
@@ -42,12 +41,12 @@ class Contest{
     required this.key,
   });
   //Factory constructor extracts data from the JSON
-  factory Contest.fromJson( Map<String,dynamic> json ){
-
-
+  factory Contest.fromJson(Map<String,dynamic> json){
+    //Extracting platform name
+    String platformName = json['host'].substring(0, json['host'].indexOf('.'));
     //returning a CodeforcesContest object
     return Contest(
-      platform: 'Codeforces',
+      platform: platformName,
       contestDate: 'contestDate',
       contestDuration: 'durationSeconds.toString()',
       contestName: '',
