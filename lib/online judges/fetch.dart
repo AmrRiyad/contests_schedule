@@ -44,6 +44,8 @@ class Contest{
   factory Contest.fromJson(Map<String,dynamic> json){
     //Extracting platform name
     String platformName = json['host'].substring(0, json['host'].indexOf('.'));
+    //Extracting contestDate
+
     //returning a CodeforcesContest object
     return Contest(
       platform: platformName,
