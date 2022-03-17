@@ -50,48 +50,45 @@ class _NewHomeState extends State<NewHome> {
                   ),
                   Positioned(
                     bottom: 35,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      width: MediaQuery.of(context).size.width - 2 * 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Color.fromRGBO(236, 243, 255, 1.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              height: 130,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Site(
+                              site: onlineJudge[index],
                             ),
-                            Text(
-                              onlineJudge[index].name,
-                              style: const TextStyle(
-                                fontFamily: 'Avenir',
-                                fontSize: 26,
-                                fontWeight: FontWeight.w900,
-                                color: Color.fromRGBO(130, 147, 248, 1.0),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        width: MediaQuery.of(context).size.width - 2 * 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color.fromRGBO(236, 243, 255, 1.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                height: 130,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                // Navigator.pushNamed(
-                                //     context, onlineJudge[index].route);
-                                press:
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Site(
-                                      site: onlineJudge[index],
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Row(
+                              Text(
+                                onlineJudge[index].name,
+                                style: const TextStyle(
+                                  fontFamily: 'Avenir',
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.w900,
+                                  color: Color.fromRGBO(130, 147, 248, 1.0),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: const [
                                   Text(
@@ -104,8 +101,8 @@ class _NewHomeState extends State<NewHome> {
                                   )
                                 ],
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
