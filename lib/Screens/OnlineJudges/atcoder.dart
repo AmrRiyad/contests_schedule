@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' ;
+import 'package:flutter/material.dart';
 
 class atcoder extends StatelessWidget {
   const atcoder({Key? key}) : super(key: key);
@@ -12,3 +12,4 @@ class atcoder extends StatelessWidget {
     );
   }
 }
+

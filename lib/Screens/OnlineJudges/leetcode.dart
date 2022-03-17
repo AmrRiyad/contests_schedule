@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart' ;
+import 'package:flutter/material.dart';
+
 class leetcode extends StatelessWidget {
   const leetcode({Key? key}) : super(key: key);
 

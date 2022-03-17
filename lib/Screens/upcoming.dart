@@ -43,10 +43,10 @@ class _UpcomingState extends State<Upcoming> {
                 itemBuilder: ( context , index ){
                   return MyCard(
                     platform: contests[index].platform,
-                    contestDate: contests[index].contestDate,
-                    contestDuration: contests[index].contestDuration,
-                    contestName: contests[index].contestName,
-                    contestTime: contests[index].contestTime,
+                    contestDate: contests[index].date,
+                    contestDuration: contests[index].duration,
+                    contestName: contests[index].name,
+                    contestTime: contests[index].time,
                   );
                 }
             );
