@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:contests_schedule/Widgets/card.dart';
 import 'package:contests_schedule/online%20judges/fetch.dart';
 import 'package:flutter/material.dart';
@@ -14,21 +16,20 @@ class Upcoming extends StatefulWidget {
 
 class _UpcomingState extends State<Upcoming> {
   List<Contest> contests = [];
-  Future ?data ;
+  Future<String> ?contestsJSONFuture;
 
 
   @override
   void initState(){
     super.initState();
-    print("test");
-    getContestsData(resourceName: 'codeforces.com');
-    print("test");
+    contestsJSONFuture = getContestsData();
+    contestsJSONFuture?.then((String value) => contests = getContestsList(value)).then((value) => contests.sort(compareTwoContestsBasedOnDate));
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: data ,
+      future: contestsJSONFuture,
         builder: (context, AsyncSnapshot<dynamic> snapshot ){
           if ( snapshot.connectionState == ConnectionState.waiting ){
             return const Center(
