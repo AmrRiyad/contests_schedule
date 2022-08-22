@@ -6,6 +6,7 @@ class MyCard extends StatelessWidget {
   final String contestDate;
   final String contestTime;
   final String contestDuration;
+
   const MyCard(
       {Key? key,
       required this.platform,
@@ -20,10 +21,18 @@ class MyCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.23,
+        // height: MediaQuery.of(context).size.height * 0.25,
         width: double.infinity,
         decoration: BoxDecoration(
-            color: Colors.greenAccent, borderRadius: BorderRadius.circular(15)),
+          gradient: LinearGradient(
+            colors: [Colors.greenAccent.withOpacity(0.4), Colors.greenAccent.withOpacity(0.35)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.3, 0.8],
+          ),
+          // Colors.greenAccent.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(15),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

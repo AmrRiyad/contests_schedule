@@ -62,7 +62,7 @@ class _NewHomeState extends State<NewHome> {
                         );
                       },
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.3,
+                        // height: MediaQuery.of(context).size.height * 0.3,
                         width: MediaQuery.of(context).size.width - 2 * 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
