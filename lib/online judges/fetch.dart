@@ -3,19 +3,52 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-int compareTwoContestsBasedOnDate(Contest firstContest, Contest secondContest) {
-  if (firstContest.key.compareTo(secondContest.key) > 0) {
-    return 1;
-  } else {
-    return 0;
+import '../localStorage/sqlDB.dart';
+
+Future<List> readData() async {
+  List dataFromDataBase = [];
+  SqlDb sqlDb = SqlDb();
+  List<Map> response =
+      await sqlDb.readData('select * from ContestsTable order by "key" ASC ');
+  dataFromDataBase.addAll(response);
+  return dataFromDataBase;
+}
+
+Future addtoDatabase(Contest dataContest) async {
+  SqlDb sqlDb = SqlDb();
+  int response = await sqlDb.insertData('''
+           INSERT INTO ContestsTable(platform ,contestName,contestDate,contestStartTime,contestDuration,"key") 
+           VALUES('${dataContest.platform}', '${dataContest.name}','${dataContest.date}','${dataContest.time}','${dataContest.duration}','${dataContest.key}')           
+                         ''');
+  print(response);
+}
+
+Future fillDataBase(String? objectsListJSON) async {
+  SqlDb sqlDb = SqlDb();
+  DateTime? mostRes;
+  List<Map> response = await sqlDb
+      .readData('select * from ContestsTable order by "key" ASC limit 1');
+  bool isDBempty = response.isEmpty;
+  if (!isDBempty) mostRes = DateTime.parse(response[0]['key']);
+
+  print("most resent $mostRes");
+
+  for (var contestObjectJSON in jsonDecode(objectsListJSON!)['objects']) {
+    Contest contest = Contest.fromJson(contestObjectJSON);
+    if (isDBempty)
+      addtoDatabase(contest);
+    else if (contest.key.compareTo(mostRes!) < 0) addtoDatabase(contest);
   }
 }
 
-List<Contest> getContestsList(String objectsListJSON) {
+Future<List<Contest>> getContestsList() async {
   List<Contest> contests = [];
-  for (var contestObjectJSON in jsonDecode(objectsListJSON)['objects']) {
-    contests.add(Contest.fromJson(contestObjectJSON));
+  List dataFromDataBase = await readData();
+  for (var contestObjectJSON in dataFromDataBase) {
+    contests.add(Contest.fromDateBase(contestObjectJSON));
   }
+  for (var x in contests) print("contests name ${x.name}");
+
   return contests;
 }
 
@@ -23,7 +56,7 @@ Future<String> getContestsData(
     {String resourceName =
         'codeforces.com,leetcode.com,codechef.com,atcoder.jp,hackerrank.com'}) async {
   var url =
-      'https://clist.by:443/api/v2/contest/?upcoming=true&start__gt=${DateTime.now()}&resource=$resourceName&format=json&username=BemwaMalak&api_key=02b1fc173fc1459c0cc9369df0e0473f2ac922e5';
+      'https://clist.by:443/api/v2/contest/?upcoming=true&start__gt=${DateTime.now()}&resource=${resourceName}&format=json&username=BemwaMalak&api_key=02b1fc173fc1459c0cc9369df0e0473f2ac922e5';
   print(DateTime.now());
   final response = await http.get(Uri.parse(url));
   if (response.statusCode == 200) {
@@ -94,5 +127,15 @@ class Contest {
       duration: contestDuration,
       key: DateTime.parse(json['start']),
     );
+  }
+
+  factory Contest.fromDateBase(Map response) {
+    return Contest(
+        platform: response['platform'],
+        name: response['contestName'],
+        date: response['contestDate'],
+        time: response['contestStartTime'],
+        duration: response['contestDuration'],
+        key: DateTime.parse(response['key']));
   }
 }
