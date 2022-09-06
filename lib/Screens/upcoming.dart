@@ -4,9 +4,6 @@ import 'package:contests_schedule/Widgets/card.dart';
 import 'package:contests_schedule/online%20judges/fetch.dart';
 import 'package:flutter/material.dart';
 
-
-
-
 class Upcoming extends StatefulWidget {
   const Upcoming({Key? key}) : super(key: key);
 
@@ -16,32 +13,34 @@ class Upcoming extends StatefulWidget {
 
 class _UpcomingState extends State<Upcoming> {
   List<Contest> contests = [];
-  Future<String> ?contestsJSONFuture;
-
+  Future<String>? contestsJSONFuture;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     contestsJSONFuture = getContestsData();
-    contestsJSONFuture?.then((String value) => contests = getContestsList(value)).then((value) => contests.sort(compareTwoContestsBasedOnDate));
+    contestsJSONFuture
+        ?.then((value) => contests = getContestsList(value))
+        .then((value) => contests.sort(compareTwoContestsBasedOnDate));
+
+    // contests[0].
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: contestsJSONFuture,
-        builder: (context, AsyncSnapshot<dynamic> snapshot ){
-          if ( snapshot.connectionState == ConnectionState.waiting ){
+        future: contestsJSONFuture,
+        builder: (context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(
-                color: Colors.greenAccent ,
+                color: Colors.greenAccent,
               ),
             );
-          }
-          else if ( snapshot.connectionState == ConnectionState.done ){
+          } else if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
-              itemCount: contests.length,
-                itemBuilder: ( context , index ){
+                itemCount: contests.length,
+                itemBuilder: (context, index) {
                   return MyCard(
                     platform: contests[index].platform,
                     contestDate: contests[index].date,
@@ -49,12 +48,10 @@ class _UpcomingState extends State<Upcoming> {
                     contestName: contests[index].name,
                     contestTime: contests[index].time,
                   );
-                }
-            );
-          }else{
-            return Container() ;
+                });
+          } else {
+            return Container();
           }
-        }
-    ) ;
+        });
   }
 }

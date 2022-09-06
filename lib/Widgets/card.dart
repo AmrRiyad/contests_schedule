@@ -1,3 +1,4 @@
+import 'package:contests_schedule/alarm/alart_info.dart';
 import 'package:flutter/material.dart';
 
 class MyCard extends StatelessWidget {
@@ -25,7 +26,10 @@ class MyCard extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.greenAccent.withOpacity(0.4), Colors.greenAccent.withOpacity(0.35)],
+            colors: [
+              Colors.greenAccent.withOpacity(0.4),
+              Colors.greenAccent.withOpacity(0.35)
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             stops: [0.3, 0.8],
@@ -71,13 +75,19 @@ class MyCard extends StatelessWidget {
                     style: const TextStyle(fontSize: 22, color: Colors.white),
                   ),
                   const Spacer(),
-                  const IconButton(
-                      onPressed: null,
-                      icon: Icon(
-                        Icons.alarm_add_outlined,
-                        size: 30,
-                        color: Colors.white38,
-                      ))
+                   IconButton(
+                    onPressed: () {
+                      var alarm_info = new AlarmInfo(
+                        alarmDataTime: DateTime.parse(contestDate),
+                        // title:
+                      );
+                    },
+                    icon: Icon(
+                      Icons.alarm_add_outlined,
+                      size: 30,
+                      color: Colors.white38,
+                    ),
+                  )
                 ],
               )
             ],
