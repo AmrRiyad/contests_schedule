@@ -23,15 +23,23 @@ Future addtoDatabase(Contest dataContest) async {
   print(response);
 }
 
+Future deleteOldContests() async {
+  SqlDb sqlDb = SqlDb();
+  int response = await sqlDb.deleteData(
+      "DELETE FROM ContestsTable WHERE 'key' < ('${DateTime.now()}')");
+}
+
 Future fillDataBase(String? objectsListJSON) async {
   SqlDb sqlDb = SqlDb();
   DateTime? mostRes;
   List<Map> response = await sqlDb
       .readData('select * from ContestsTable order by "key" ASC limit 1');
   bool isDBempty = response.isEmpty;
-  if (!isDBempty) mostRes = DateTime.parse(response[0]['key']);
-
-  print("most resent $mostRes");
+  if (!isDBempty) {
+    mostRes = DateTime.parse(response[0]['key']);
+    print("most resent $mostRes");
+    await deleteOldContests();
+  }
 
   for (var contestObjectJSON in jsonDecode(objectsListJSON!)['objects']) {
     Contest contest = Contest.fromJson(contestObjectJSON);
