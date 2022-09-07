@@ -39,7 +39,7 @@ dependencies:
   flutter_spinkit:
   flutter_local_notifications: ^9.4.0
   timezone: ^0.8.0
-
+  connectivity_plus: ^2.3.0
 
 
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:contests_schedule/Screens/upcoming.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -64,9 +66,10 @@ Future<String> getContestsData(
     {String resourceName =
         'codeforces.com,leetcode.com,codechef.com,atcoder.jp,hackerrank.com'}) async {
   var url =
-      'https://clist.by:443/api/v2/contest/?upcoming=true&start__gt=${DateTime.now()}&resource=${resourceName}&format=json&username=BemwaMalak&api_key=02b1fc173fc1459c0cc9369df0e0473f2ac922e5';
+      'https://clist.by:443/api/v2/contest/?upcoming=true&start__gt=${DateTime.now()!}&resource=${resourceName!}&format=json&username=BemwaMalak&api_key=02b1fc173fc1459c0cc9369df0e0473f2ac922e5';
   print(DateTime.now());
   final response = await http.get(Uri.parse(url));
+  print(response.statusCode);
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then return the JSON.

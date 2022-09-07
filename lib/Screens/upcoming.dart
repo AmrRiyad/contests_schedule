@@ -21,14 +21,17 @@ class _UpcomingState extends State<Upcoming> {
   Future Load() async {
     // SqlDb sqlDb = SqlDb();
     // sqlDb.mydeleteDatebase();
-    contestsJSONFuture = await getContestsData();
-    await fillDataBase(contestsJSONFuture);
-    contests = await getContestsList();
+    try {
+      contestsJSONFuture = await getContestsData();
+      await fillDataBase(contestsJSONFuture);
+      contests = await getContestsList();
+    } catch (_) {
+      contests = await getContestsList();
+    }
     print("hint");
     isLoading = false;
     if (this.mounted) setState(() {});
 
-    // .then((value) => contests.sort(compareTwoContestsBasedOnDate));
   }
 
   void initState() {

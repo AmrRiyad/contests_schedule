@@ -7,11 +7,16 @@ import 'package:timezone/data/latest.dart' as tz;
 
 import 'upcoming.dart';
 
-class Site extends StatelessWidget {
+class Site extends StatefulWidget {
   final OnlineJudge? site;
 
   const Site({Key? key, this.site}) : super(key: key);
 
+  @override
+  State<Site> createState() => _SiteState();
+}
+
+class _SiteState extends State<Site> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +26,10 @@ class Site extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color.fromRGBO(130, 147, 248, 1.0), Colors.indigoAccent],
+                colors: [
+                  Color.fromRGBO(130, 147, 248, 1.0),
+                  Colors.indigoAccent
+                ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 stops: [0.3, 0.8],
@@ -29,7 +37,7 @@ class Site extends StatelessWidget {
             ),
           ),
           siteBody(
-            site: site,
+            site: widget.site,
           ),
         ],
       ),
@@ -50,8 +58,6 @@ class _siteBodyState extends State<siteBody> {
   @override
   void initState() {
     super.initState();
-
-    tz.initializeTimeZones();
   }
 
   Widget build(BuildContext context) {
@@ -90,23 +96,6 @@ class _siteBodyState extends State<siteBody> {
                         contestTime: 'demo',
                         contestDuration: 'demo',
                         color: Colors.black54,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          NotificationService()
-                              .showNotification(1, "title", "body", 10);
-                        },
-                        child: Container(
-                          height: 40,
-                          width: 200,
-                          color: Colors.black,
-                          child: Center(
-                            child: Text(
-                              "Show Notification",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
                       ),
                     ],
                   ),
