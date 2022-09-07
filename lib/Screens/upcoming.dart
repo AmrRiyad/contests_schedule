@@ -24,9 +24,9 @@ class _UpcomingState extends State<Upcoming> {
     try {
       contestsJSONFuture = await getContestsData();
       await fillDataBase(contestsJSONFuture);
-      contests = await getContestsList();
+      contests = await getContestsList('select * from ContestsTable order by "key" ASC ');
     } catch (_) {
-      contests = await getContestsList();
+      contests = await getContestsList('select * from ContestsTable order by "key" ASC ');
     }
     print("hint");
     isLoading = false;
@@ -58,6 +58,7 @@ class _UpcomingState extends State<Upcoming> {
                 contestDuration: contests[index].duration,
                 contestName: contests[index].name,
                 contestTime: contests[index].time,
+                backColor:  Colors.greenAccent,
               );
             });
   }

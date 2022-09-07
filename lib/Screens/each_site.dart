@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
+import '../Widgets/card.dart';
+import '../online judges/fetch.dart';
 import 'upcoming.dart';
 
 class Site extends StatefulWidget {
@@ -55,8 +57,28 @@ class siteBody extends StatefulWidget {
 }
 
 class _siteBodyState extends State<siteBody> {
+  List<Contest> contests = [];
+  String? contestsJSONFuture;
+  bool isLoading = true;
+
   @override
+  Future Load() async {
+    // SqlDb sqlDb = SqlDb();
+    // sqlDb.mydeleteDatebase();
+    try {
+      contestsJSONFuture = await getContestsData();
+      await fillDataBase(contestsJSONFuture);
+      contests = await getContestsList('select * from ContestsTable WHERE platform = "${widget.site!.name}" order by "key" ASC ');
+    } catch (_) {
+      contests = await getContestsList('select * from ContestsTable WHERE platform = "${widget.site!.name}" order by "key" ASC ');
+    }
+    print("hint");
+    isLoading = false;
+    if (this.mounted) setState(() {});
+  }
+
   void initState() {
+    Load();
     super.initState();
   }
 
@@ -71,35 +93,38 @@ class _siteBodyState extends State<siteBody> {
             child: Stack(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: size.height * 0.1),
-                  padding: EdgeInsets.only(
-                      top: size.height * 0.12, right: 20, left: 20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: const Radius.circular(24),
-                      topRight: const Radius.circular(24),
+                    margin: EdgeInsets.only(top: size.height * 0.1),
+                    padding: EdgeInsets.only(
+                        top: size.height * 0.12, right: 20, left: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: const Radius.circular(24),
+                        topRight: const Radius.circular(24),
+                      ),
+                      color: Colors.white,
                     ),
-                    color: Colors.white,
-                  ),
-                  child: ListView(
-                    children: [
-                      GlassContainer(
-                        contestName: "demo",
-                        contestDate: 'demo',
-                        contestTime: 'demo',
-                        contestDuration: 'demo',
-                        color: Colors.black54,
-                      ),
-                      GlassContainer(
-                        contestName: "demo",
-                        contestDate: 'demo',
-                        contestTime: 'demo',
-                        contestDuration: 'demo',
-                        color: Colors.black54,
-                      ),
-                    ],
-                  ),
-                ),
+                    child: isLoading
+                        ? Center(
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.greenAccent,
+                              ),
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: contests.length,
+                            itemBuilder: (context, index) {
+                              return MyCard(
+                                platform: contests[index].platform,
+                                contestDate: contests[index].date,
+                                contestDuration: contests[index].duration,
+                                contestName: contests[index].name,
+                                contestTime: contests[index].time,
+                                backColor:
+                                // Colors.indigo,
+                                Color(0xf101B59FF),
+                              );
+                            })),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: size.height * 0.04,

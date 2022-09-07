@@ -16,27 +16,27 @@ class OnlineJudge {
 
 List<OnlineJudge> onlineJudge = [
   OnlineJudge(
-    'CodeForces',
+    'codeforces',
     'assets/codeforceswithno.png',
     'codeforces',
   ),
   OnlineJudge(
-    'Codechef',
+    'codechef',
     'assets/codechef.png',
     'codechef',
   ),
   OnlineJudge(
-    'Hackerrank',
+    'hackerrank',
     'assets/hackerrankwithno.png',
     'hackerrank',
   ),
   OnlineJudge(
-    'Leetcode',
+    'leetcode',
     'assets/leetcodewithno.png',
     'leetcode',
   ),
   OnlineJudge(
-    'AtCoder',
+    'atcoder',
     'assets/atcoderwithno.png',
     'atcoder',
   ),

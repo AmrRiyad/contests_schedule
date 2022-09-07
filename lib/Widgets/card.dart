@@ -7,6 +7,7 @@ class MyCard extends StatelessWidget {
   final String contestDate;
   final String contestTime;
   final String contestDuration;
+  final Color backColor;
 
   const MyCard(
       {Key? key,
@@ -14,7 +15,8 @@ class MyCard extends StatelessWidget {
       required this.contestName,
       required this.contestDate,
       required this.contestTime,
-      required this.contestDuration})
+      required this.contestDuration,
+      required this.backColor})
       : super(key: key);
 
   @override
@@ -27,8 +29,8 @@ class MyCard extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.greenAccent.withOpacity(0.4),
-              Colors.greenAccent.withOpacity(0.35)
+              backColor.withOpacity(0.4),
+              backColor.withOpacity(0.35)
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -75,7 +77,7 @@ class MyCard extends StatelessWidget {
                     style: const TextStyle(fontSize: 22, color: Colors.white),
                   ),
                   const Spacer(),
-                   IconButton(
+                  IconButton(
                     onPressed: () {
                       var alarm_info = new AlarmInfo(
                         alarmDataTime: DateTime.parse(contestDate),

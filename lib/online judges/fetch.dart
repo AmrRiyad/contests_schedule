@@ -7,11 +7,10 @@ import 'dart:convert';
 
 import '../localStorage/sqlDB.dart';
 
-Future<List> readData() async {
+Future<List> readData(String sql) async {
   List dataFromDataBase = [];
   SqlDb sqlDb = SqlDb();
-  List<Map> response =
-      await sqlDb.readData('select * from ContestsTable order by "key" ASC ');
+  List<Map> response = await sqlDb.readData(sql);
   dataFromDataBase.addAll(response);
   return dataFromDataBase;
 }
@@ -51,9 +50,9 @@ Future fillDataBase(String? objectsListJSON) async {
   }
 }
 
-Future<List<Contest>> getContestsList() async {
+Future<List<Contest>> getContestsList(String sql) async {
   List<Contest> contests = [];
-  List dataFromDataBase = await readData();
+  List dataFromDataBase = await readData(sql);
   for (var contestObjectJSON in dataFromDataBase) {
     contests.add(Contest.fromDateBase(contestObjectJSON));
   }
